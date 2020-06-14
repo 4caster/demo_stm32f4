@@ -1,0 +1,54 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "process",
+			"command": "cargo",
+			"args": [
+				"objcopy",
+				"--bin",
+				"demo_stm32f4",						//Изменить под имя проекта
+				"--target",
+				"thumbv7em-none-eabihf",
+			//	"--release",
+				"--",
+				"-O",
+				"binary",
+				"demo_stm32f4.bin"						//Изменить на усмотрение
+			],
+			"problemMatcher": [
+				"$rustc"
+			],
+			"group": "build",
+			"label": "Rust: cargo build - stm32f4"
+		},
+		{
+			"type": "process",
+			"command": "cargo",
+			"args": [
+				"clean"
+			],
+			"problemMatcher": [
+				"$rustc"
+			],
+			"group": "build",
+			"label": "Rust: cargo clean - stm32f4"
+		},
+		{
+			"type": "process",
+			"command": "ST-LINK_CLI.exe",
+			"args": [
+				"-P",								//Firmware download
+				".\\demo_stm32f4.bin",					//TODO: Switch to use of only system vars !!!Изменить под имя вашего бинаря!!!
+				"0x08000000",						//Address
+				"-V",								//Enable version
+				"-Rst",								//Reset controller
+			],
+			"problemMatcher": [
+				"$rustc"
+			],
+			"group": "build",
+			"label": "Rust: cargo run - stm32f4"
+		}
+	]
+}
